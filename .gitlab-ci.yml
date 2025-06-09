@@ -1,0 +1,34 @@
+image: golang:1.22-alpine            # базовый контейнер
+
+stages:                              # порядок этапов
+  - test
+  - build
+
+variables:                           # общие переменные
+  CGO_ENABLED: "0"
+
+before_script:                       # выполняется в каждом job
+  - apk add --no-cache git
+  - go version
+
+unit_tests:
+  stage: test
+  script:
+    - go test -v ./...               # запускаем все тесты
+  artifacts:                         # сохраняем отчёт
+    when: always
+    reports:
+      junit: report.xml
+    paths:
+      - report.xml
+  tags: [docker, go]                 # привязываем к нашему раннеру
+
+build_binary:
+  stage: build
+  needs: []                          # ← важный пункт для задания 3*
+  script:
+    - go build -o myapp .
+  artifacts:
+    paths:
+      - myapp
+  tags: [docker, go]
