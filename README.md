@@ -12,7 +12,7 @@
 
 Ответ: 
 Развернул GitLab, прикрутил также https, это уже для удобной работы. Штука интересная, буду юзать обязательно)
- ![WEB](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/1%23Web_GitLab.png)
+ ![WEB](https://github.com/dtutu-tds/8-02-hw/blob/main/screenshot/1%23Web_GitLab.png)
 
 ---
 
@@ -31,7 +31,7 @@
  Ответ: 
  Запушил репозиторий командой - git push -uf origin --all ;
  Предварительно изменил URL на свой - git remote set-url origin https://gitlab.office-dtutu.ru/tds/8-02-hw.git .
- ![PUSH](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/2%23push.png)
+ ![PUSH](https://github.com/dtutu-tds/8-02-hw/blob/main/screenshot/2%23push.png)
 
  Далее я установил gitlab-runner на хост, и зарегестрировал его командой: 
  sudo gitlab-runner register \
@@ -42,39 +42,39 @@
   --tag-list "docker,go" \
   --docker-image "docker:25.0.0" \
   --docker-volumes "/var/run/docker.sock:/var/run/docker.sock"
-  ![RUNNER](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/2%23runner.png)
-  ![PIPELINE_RUN](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/pipeline_running.png)
-  ![pipeline_passed](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/pipeline_passed.png)
+  ![RUNNER](https://github.com/dtutu-tds/8-02-hw/blob/main/screenshot/2%23runner.png)
+  ![PIPELINE_RUN](https://github.com/dtutu-tds/8-02-hw/blob/main/screenshot/pipeline_running.png)
+  ![pipeline_passed](https://github.com/dtutu-tds/8-02-hw/blob/main/screenshot/pipeline_passed.png)
 
 Создал файл .gitlab-ci.yml, с таким содержанием:
-[image: golang:1.22-alpine            # базовый контейнер
+[image: golang:1.22-alpine           
 
-stages:                              # порядок этапов
+stages:                             
   - test
   - build
 
-variables:                           # общие переменные
+variables:                         
   CGO_ENABLED: "0"
 
-before_script:                       # выполняется в каждом job
+before_script:                    
   - apk add --no-cache git
   - go version
 
 unit_tests:
   stage: test
   script:
-    - go test -v ./...               # запускаем все тесты
-  artifacts:                         # сохраняем отчёт
+    - go test -v ./...               
+  artifacts:                        
     when: always
     reports:
       junit: report.xml
     paths:
       - report.xml
-  tags: [docker, go]                 # привязываем к нашему раннеру
+  tags: [docker, go]               
 
 build_binary:
   stage: build
-  needs: []                          # ← важный пункт для задания 3*
+  needs: []                          
   script:
     - go build -o myapp .
   artifacts:
