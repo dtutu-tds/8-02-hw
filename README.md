@@ -12,7 +12,7 @@
 
 Ответ: 
 Развернул GitLab, прикрутил также https, это уже для удобной работы. Штука интересная, буду юзать обязательно)
- ![alt text](screenshot/1#Web_GitLab.png)
+ ![WEB](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/1%23Web_GitLab.png)
 
 ---
 
@@ -31,7 +31,7 @@
  Ответ: 
  Запушил репозиторий командой - git push -uf origin --all ;
  Предварительно изменил URL на свой - git remote set-url origin https://gitlab.office-dtutu.ru/tds/8-02-hw.git .
- ![alt text](screenshot/2#push.png)
+ ![PUSH](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/2%23push.png)
 
  Далее я установил gitlab-runner на хост, и зарегестрировал его командой: 
  sudo gitlab-runner register \
@@ -42,8 +42,9 @@
   --tag-list "docker,go" \
   --docker-image "docker:25.0.0" \
   --docker-volumes "/var/run/docker.sock:/var/run/docker.sock"
-  ![alt text](screenshot/2#runner.png)
-  ![alt text](screenshot/2#online_runner.png)
+  ![RUNNER](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/2%23runner.png)
+  ![PIPELINE_RUN](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/pipeline_running.png)
+  ![pipeline_passed](https://gitlab.office-dtutu.ru/tds/8-02-hw/-/blob/3a531d9be73385d3825bf2ab6ab4ea7ae7ed92c0/screenshot/pipeline_passed.png)
 
 Создал файл .gitlab-ci.yml, с таким содержанием:
 [image: golang:1.22-alpine            # базовый контейнер
@@ -82,17 +83,3 @@ build_binary:
   tags: [docker, go]
 ]
 ---
-## Дополнительные задания* (со звёздочкой)
-
-Их выполнение необязательное и не влияет на получение зачёта по домашнему заданию. Можете их решить, если хотите лучше разобраться в материале.
-
----
-
-### Задание 3*
-
-Измените CI так, чтобы:
-
- - этап сборки запускался сразу, не дожидаясь результатов тестов;
- - тесты запускались только при изменении файлов с расширением *.go.
-
-В качестве ответа добавьте в шаблон с решением файл gitlab-ci.yml своего проекта или вставьте код в соответсвующее поле в шаблоне.
